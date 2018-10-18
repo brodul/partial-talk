@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>functools.partial</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/white.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +24,119 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-background-image="intro.jpg" data-backgroud-position="bottom">
+					<p style="
+						position: relative;
+						top: -5rem;">
+					functools.partial</p>
+				</section>
+				<section data-markdown style="font-size: 7rem;">
+					<textarea data-template>
+						``` python
+						def add(a, b):
+							return a + b
+						```
+						``` python
+						add(3, 2)  # 5
+						add(5, 2)  # 7
+						```
+					</textarea>
+				</section>
+				<section data-markdown style="font-size: 7rem;">
+					<textarea data-template>
+						``` python
+						def add2(a, b=2):
+							return a + b
+						```
+						``` python
+						add2(3, 1)  # 4
+						add2(5)  # 7
+						```
+					</textarea>
+				</section>
+				<section data-background-image="fishy.jpg" data-backgroud-position="bottom">
+				</section>
+				<section data-markdown style="font-size: 7rem;">
+					<textarea data-template>
+						``` python
+						def add(a, 2):
+							return a + 2
+						```
+						``` python
+						def add2(a):
+							return a + 2
+						```
+					</textarea>
+				</section>
+				<section data-markdown style="font-size: 5rem;">
+					<textarea data-template>
+						``` python
+						def add(a, b):
+							return a + b
+						```
+						``` python
+						from functools import partial
+
+						add2 = partial(add, b=2)
+						add2 = partial(add, 2)  # a=2
+						```
+					</textarea>
+				</section>
+				<section data-background-image="build.jpg" data-backgroud-position="bottom">
+				</section>
+				<section data-markdown style="font-size: 5rem;">
+					<textarea data-template>
+						``` python
+						def minmax(value, min, max):
+							if not (min <= value <= max):
+								raise ValueError
+							return value
+						```
+					</textarea>
+				</section>
+				<section data-markdown style="font-size: 4rem;">
+					<textarea data-template>
+						``` python
+						mixmax(1, 1, 5) # 1
+						minmax(-1, 1, 5)  # ValueError
+
+						grade_validator = partial(
+							minmax, min=1, max=5)
+
+						grade_validator(5)  # 5
+						grade_validator(6)  # ValueError
+						```
+					</textarea>
+				</section>
+				<section data-background-image="hero.jpg" data-backgroud-position="bottom">
+				</section>
+				<section data-markdown style="font-size: 5rem;">
+					<textarea data-template>
+						``` python
+from flask import request
+def login_view():
+	if request.method == 'POST':
+		return do_the_login()
+						```
+					</textarea>
+				</section>
+				<section data-markdown style="font-size: 5rem;">
+					<textarea data-template>
+						``` python
+def login_view(request):
+	if request.method == 'POST':
+		return do_the_login()
+						```
+						``` python
+						# route.py
+						app.add_url_rule(
+							'/login/',
+							'login',
+							partial(login_view, request)
+						)
+						```
+					</textarea>
+				</section>
 			</div>
 		</div>
 
